@@ -1,0 +1,11 @@
+A new review has been submitted and requires approval.
+
+Post: {{ review.post.title }}
+Author: {{ review.user.username }}
+Rating: {{ review.get_rating_display }}
+Date: {{ review.created_date }}
+Content:
+{{ review.content }}
+
+Approve or reject this review at:
+{{ admin_url }}

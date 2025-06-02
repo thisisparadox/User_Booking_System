@@ -1,0 +1,16 @@
+{% for comment in approved_comments %}
+<div class="comment-item">
+    <div class="comment-header">
+        <span class="comment-author">{{ comment.user.username }}</span>
+        <span class="comment-date">
+            {{ comment.created_date|date:"F j, Y" }} at
+            {{ comment.created_date|time:"g:i a" }}
+        </span>
+    </div>
+    <div class="comment-content">
+        {{ comment.content|linebreaks }}
+    </div>
+</div>
+{% empty %}
+<p class="no-comments">No comments yet. Be the first to comment!</p>
+{% endfor %}

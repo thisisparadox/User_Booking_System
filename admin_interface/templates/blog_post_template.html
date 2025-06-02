@@ -1,0 +1,214 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }} | Storm's Beach and Country Club{% endblock %}
+
+{% block content %}
+<!-- Post Detail Content -->
+<section class="post-detail">
+    <div class="container">
+        <article class="post-content">
+            <!-- Post Header -->
+            <div class="post-header">
+                <h1>{{ post.title }}</h1>
+                <div class="post-meta">
+                    <span class="post-date">
+                        <i class="far fa-calendar-alt"></i>
+                        {{ post.publish_date|date:"F j, Y" }}
+                    </span>
+                    <span class="post-category">
+                        <i class="fas fa-tag"></i>
+                        {{ post.category.name }}
+                    </span>
+                    <span class="post-read-time">
+                        <i class="far fa-clock"></i>
+                        {{ post.read_time }} min read
+                    </span>
+                </div>
+            </div>
+
+            <!-- Featured Image -->
+            <div class="featured-image">
+                <img src="{{ post.featured_image.url }}" alt="{{ post.title }}">
+            </div>
+
+            <!-- Post Body -->
+            <div class="post-body">
+                {{ post.content|safe }}
+            </div>
+
+            <!-- Post Footer -->
+            <div class="post-footer">
+                <div class="post-tags">
+                    <!-- Tags would go here if you add them -->
+                </div>
+                <div class="post-actions">
+                    <button class="like-btn" data-post-id="{{ post.id }}" data-action="like">
+                        <i class="far fa-heart"></i>
+                        <span class="like-count">{{ post.likes.count }}</span> Likes
+                    </button>
+                    <a href="#comments" class="comment-btn">
+                        <i class="far fa-comment"></i> Comment
+                    </a>
+                </div>
+            </div>
+        </article>
+
+        <!-- Reviews Section -->
+        <section class="reviews-section" id="reviews">
+            <h2>Guest Reviews</h2>
+
+            <!-- Review Form (only for authenticated users) -->
+            {% if user.is_authenticated %}
+            <div class="review-form-container">
+                <h3>Write a Review</h3>
+                <form method="post" action="{% url 'blog:add_review' post.id %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ review_form.as_p }}
+                    <div class="form-group">
+                        <label>Upload Images (max 5)</label>
+                        <input type="file" name="images" multiple accept="image/*">
+                    </div>
+                    <button type="submit" class="btn-submit">Submit Review</button>
+                </form>
+            </div>
+            {% else %}
+            <p class="login-prompt">
+                <a href="{% url 'login' %}?next={{ request.path }}">Log in</a> to leave a review.
+            </p>
+            {% endif %}
+
+            <!-- Approved Reviews List -->
+            <div class="reviews-list">
+                {% for review in approved_reviews %}
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="review-author">
+                            <span class="author-name">{{ review.user.username }}</span>
+                            <span class="review-date">
+                                {{ review.created_date|date:"F j, Y" }}
+                            </span>
+                        </div>
+                        <div class="review-rating">
+                            {% for i in "12345" %}
+                                <i class="fas fa-star{% if forloop.counter > review.rating %}-o{% endif %}"></i>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <h3 class="review-title">{{ review.title }}</h3>
+                    <div class="review-content">
+                        {{ review.content|linebreaks }}
+                    </div>
+
+                    <!-- Review Images -->
+                    {% if review.images.all %}
+                    <div class="review-images">
+                        {% for image in review.images.all %}
+                        <div class="review-image">
+                            <img src="{{ image.image.url }}" alt="Review image">
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% empty %}
+                <p class="no-reviews">No reviews yet. Be the first to review!</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Comments Section -->
+        <section class="comments-section" id="comments">
+            <h2>Comments</h2>
+
+            <!-- Comment Form -->
+            {% if user.is_authenticated %}
+            <div class="comment-form-container">
+                <form method="post" action="{% url 'blog:add_comment' post.id %}">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <button type="submit" class="btn-submit">Post Comment</button>
+                </form>
+            </div>
+            {% else %}
+            <p class="login-prompt">
+                <a href="{% url 'login' %}?next={{ request.path }}">Log in</a> to leave a comment.
+            </p>
+            {% endif %}
+
+            <!-- Approved Comments List -->
+            <div class="comments-list">
+                {% for comment in approved_comments %}
+                <div class="comment-item">
+                    <div class="comment-header">
+                        <span class="comment-author">{{ comment.user.username }}</span>
+                        <span class="comment-date">
+                            {{ comment.created_date|date:"F j, Y" }} at
+                            {{ comment.created_date|time:"g:i a" }}
+                        </span>
+                    </div>
+                    <div class="comment-content">
+                        {{ comment.content|linebreaks }}
+                    </div>
+                </div>
+                {% empty %}
+                <p class="no-comments">No comments yet. Be the first to comment!</p>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Like button functionality
+document.querySelectorAll('.like-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        const postId = this.dataset.postId;
+        const action = this.dataset.action;
+        const likeCount = this.querySelector('.like-count');
+
+        fetch(`{% url 'blog:like_post' 0 %}`.replace('0', postId), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({'action': action})
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                likeCount.textContent = data.total_likes;
+                const newAction = action === 'like' ? 'unlike' : 'like';
+                this.dataset.action = newAction;
+
+                // Update button appearance
+                if (newAction === 'unlike') {
+                    this.querySelector('i').classList.replace('far', 'fas');
+                } else {
+                    this.querySelector('i').classList.replace('fas', 'far');
+                }
+            }
+        });
+    });
+});
+</script>
+<script>
+// Function to load new comments
+function loadNewComments() {
+    fetch(`{% url 'blog:post_detail' post.publish_date.year post.publish_date.month post.publish_date.day post.slug %}?partial=comments`)
+        .then(response => response.text())
+        .then(html => {
+            document.querySelector('.comments-list').innerHTML = html;
+        });
+}
+
+// Poll for new comments every 30 seconds
+setInterval(loadNewComments, 30000);
+
+// Initial load
+document.addEventListener('DOMContentLoaded', loadNewComments);
+</script>
+{% endblock %}

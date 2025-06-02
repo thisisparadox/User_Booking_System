@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | Storm's Beach and Country Club</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/register.css">
+</head>
+
+<body>
+    <!-- Header transition -->
+    <div class="page-transition">
+        <header>
+            <div class="logo-container">
+                <img src="img/storms-logo.png" alt="Storm's Beach and Country Club Logo">
+                <span class="logo-text">Storm's Beach and Country Club</span>
+            </div>
+        </header>
+        <!-- main content -->
+        <div class="main-container">
+            <div class="welcome-panel">
+                <div class="welcome-content">
+                    <h2>Welcome to Storm's Beach and Country Club</h2>
+                    </h2>
+                    <p>Already have an account?</p>
+                    <a href="index.html" class="btn transition-link">Sign In</a>
+                </div>
+            </div>
+
+            <div class="form-panel">
+                <h2>Create Your Account</h2>
+                <form id="register-form" action="register.php" method="post"
+                    onsubmit="showSpinner(); return validateForm();">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" name="email" id="email" required placeholder="Enter your email">
+                        <div class="error-message" id="email-error">Please enter a valid email address</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" required placeholder="Create your username">
+                        <div class="error-message" id="username-error">Username must be at least 3 characters</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="password-container">
+                            <input type="password" id="password" name="password" required
+                                placeholder="Create a password">
+                            <i class="fas fa-eye password-toggle" onclick="togglePasswordVisibility()"></i>
+                        </div>
+                        <div class="error-message" id="password-error">Password must be at least 8 characters</div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">Register Now</button>
+                    <div id="spinner" class="spinner hidden"></div>
+
+                </form>
+            </div>
+        </div>
+        <!-- Footer
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2023 Storm's Beach and Country Club. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-tripadvisor"></i></a>
+                </div>
+            </div>
+        </footer> -->
+
+        <script>
+            // Fade-out effect for page transition
+            document.querySelectorAll('.transition-link').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.body.classList.add('fade-out');
+                    setTimeout(() => {
+                        window.location.href = this.href;
+                    }, 300); // match with transition duration
+                });
+            });
+            // Form validation and spinner
+            function showSpinner() {
+                const spinner = document.getElementById('spinner');
+                spinner.classList.remove('hidden');
+            }
+            // Password visibility toggle
+            function togglePasswordVisibility() {
+                const passwordInput = document.getElementById('password');
+                const toggleIcon = document.querySelector('.password-toggle');
+
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    toggleIcon.classList.remove('fa-eye');
+                    toggleIcon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    toggleIcon.classList.remove('fa-eye-slash');
+                    toggleIcon.classList.add('fa-eye');
+                }
+            }
+            // Form validation
+            function validateForm() {
+                const email = document.getElementById('email').value;
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                let isValid = true;
+
+                // Reset error messages
+                document.querySelectorAll('.error-message').forEach(el => {
+                    el.style.display = 'none';
+                });
+
+                // Email validation
+                if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                    document.getElementById('email-error').style.display = 'block';
+                    isValid = false;
+                }
+
+                // Username validation
+                if (username.length < 3) {
+                    document.getElementById('username-error').style.display = 'block';
+                    isValid = false;
+                }
+
+                // Password validation
+                if (password.length < 8) {
+                    document.getElementById('password-error').style.display = 'block';
+                    isValid = false;
+                }
+
+                if (!isValid) {
+                    document.getElementById('spinner').classList.add('hidden');
+                    return false;
+                }
+
+                return true;
+            }
+
+            // Real-time validation
+            document.getElementById('email').addEventListener('input', function () {
+                if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value)) {
+                    document.getElementById('email-error').style.display = 'none';
+                }
+            });
+            // Username validation
+            document.getElementById('username').addEventListener('input', function () {
+                if (this.value.length >= 3) {
+                    document.getElementById('username-error').style.display = 'none';
+                }
+            });
+            // Password validation
+            document.getElementById('password').addEventListener('input', function () {
+                if (this.value.length >= 8) {
+                    document.getElementById('password-error').style.display = 'none';
+                }
+            });
+        </script>
+    </div>
+</body>
+
+</html>

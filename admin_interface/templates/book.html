@@ -1,0 +1,241 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Book Your Stay |
+Storm's Beach and Country Club{% endblock %} {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/booking.css' %}" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+{% endblock %} {% block content %}
+<!-- Hero Section -->
+<section class="booking-hero">
+  <div class="container">
+    <div class="hero-content">
+      <h1>Book Your Stay</h1>
+      <p class="hero-subtitle">Experience luxury at our tropical paradise</p>
+    </div>
+  </div>
+</section>
+
+<!-- Booking Content -->
+<main class="container booking-container">
+  <!-- Booking Form -->
+  <div class="booking-form-container">
+    <h2>Reservation Details</h2>
+    <p>Please fill in your information to complete your booking</p>
+
+    <form id="booking-form" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="room-type">Select Accommodation</label>
+        <select id="room-type" class="form-control" name="room_type" required>
+          <option value="" disabled selected>Choose your accommodation</option>
+          <option value="guest-house">
+            Family Guest House (₱12,000/night)
+          </option>
+          <option value="beach-villa">Beachfront Villa (₱18,000/night)</option>
+          <option value="luxury-suite">Luxury Suite (₱25,000/night)</option>
+          <option value="presidential">
+            Presidential Suite (₱40,000/night)
+          </option>
+        </select>
+        <div class="error-message">Please select a room type</div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="check-in">Check-in Date</label>
+          <input
+            type="date"
+            id="check-in"
+            class="form-control"
+            name="check_in"
+            required
+          />
+          <div class="error-message">Please select a check-in date</div>
+        </div>
+
+        <div class="form-group">
+          <label for="check-out">Check-out Date</label>
+          <input
+            type="date"
+            id="check-out"
+            class="form-control"
+            name="check_out"
+            required
+          />
+          <div class="error-message">Please select a check-out date</div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="adults">Adults</label>
+          <select id="adults" class="form-control" name="adults" required>
+            <option value="1">1 Adult</option>
+            <option value="2" selected>2 Adults</option>
+            <option value="3">3 Adults</option>
+            <option value="4">4 Adults</option>
+            <option value="5">5+ Adults</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="children">Children</label>
+          <select id="children" class="form-control" name="children">
+            <option value="0" selected>No Children</option>
+            <option value="1">1 Child</option>
+            <option value="2">2 Children</option>
+            <option value="3">3 Children</option>
+            <option value="4">4+ Children</option>
+          </select>
+        </div>
+      </div>
+
+      <h3>Personal Information</h3>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="first-name">First Name</label>
+          <input
+            type="text"
+            id="first-name"
+            class="form-control"
+            name="first_name"
+            required
+          />
+          <div class="error-message">Please enter your first name</div>
+        </div>
+
+        <div class="form-group">
+          <label for="last-name">Last Name</label>
+          <input
+            type="text"
+            id="last-name"
+            class="form-control"
+            name="last_name"
+            required
+          />
+          <div class="error-message">Please enter your last name</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          class="form-control"
+          name="email"
+          required
+        />
+        <div class="error-message">Please enter a valid email address</div>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input
+          type="tel"
+          id="phone"
+          class="form-control"
+          name="phone"
+          required
+        />
+        <div class="error-message">Please enter your phone number</div>
+      </div>
+
+      <div class="form-group">
+        <label for="special-requests">Special Requests (Optional)</label>
+        <textarea
+          id="special-requests"
+          class="form-control"
+          name="special_requests"
+          rows="4"
+          placeholder="Any special requirements or preferences..."
+        ></textarea>
+      </div>
+
+      <div class="form-group checkbox">
+        <input type="checkbox" id="terms" name="terms" required />
+        <label for="terms"
+          >I agree to the <a href="#">terms and conditions</a> and
+          <a href="#">cancellation policy</a></label
+        >
+        <div class="error-message">You must agree to the terms</div>
+      </div>
+
+      <button type="submit" class="btn-submit">Complete Booking</button>
+
+      {% if messages %}
+      <div class="booking-success">
+        <i class="fas fa-check-circle"></i>
+        <h3>Booking Confirmed!</h3>
+        <p>
+          Thank you for your reservation. We've sent a confirmation to your
+          email.
+        </p>
+      </div>
+      {% endif %}
+    </form>
+  </div>
+
+  <!-- Booking Summary -->
+  <div class="booking-summary">
+    <h2>Your Booking Summary</h2>
+
+    <img
+      src="{% static 'img/guest-house.jpg' %}"
+      alt="Family Guest House"
+      class="room-image"
+    />
+
+    <h3>Family Guest House</h3>
+    <p>
+      Spacious, child-friendly accommodations designed for comfort and
+      convenience during your family vacation.
+    </p>
+
+    <div class="amenities-list">
+      <div class="amenity-item"><i class="fas fa-wifi"></i> Free WiFi</div>
+      <div class="amenity-item">
+        <i class="fas fa-swimming-pool"></i> Pool Access
+      </div>
+      <div class="amenity-item">
+        <i class="fas fa-utensils"></i> Breakfast Included
+      </div>
+      <div class="amenity-item"><i class="fas fa-tv"></i> Smart TV</div>
+      <div class="amenity-item">
+        <i class="fas fa-snowflake"></i> Air Conditioning
+      </div>
+      <div class="amenity-item">
+        <i class="fas fa-parking"></i> Free Parking
+      </div>
+    </div>
+
+    <div class="summary-item">
+      <span>3 Nights</span>
+      <span>₱12,000/night</span>
+    </div>
+
+    <div class="summary-item">
+      <span>Taxes & Fees</span>
+      <span>₱1,800</span>
+    </div>
+
+    <div class="summary-item summary-total">
+      <span>Total</span>
+      <span>₱37,800</span>
+    </div>
+
+    <div class="cancellation-policy">
+      <h4>Cancellation Policy</h4>
+      <p>
+        Free cancellation up to 14 days before check-in. No refund for
+        cancellations within 14 days of arrival.
+      </p>
+    </div>
+  </div>
+</main>
+{% endblock %}
+<script src="js/jquery-3.6.0.min.js"></script>
+<script src="js/scripts.min.js"></script>
+<script src="js/book.js"></script>
+{% block extra_js %}
+<script src="{% static 'js/book.js' %}"></script>
+{% endblock %}

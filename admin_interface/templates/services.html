@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load static custom_filters %}
+{% block title %}Our Services | Storm's Beach and Country Club{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'style.css' %}" />
+<link rel="stylesheet" href="{% static 'css/services.css' %}" />
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="services-hero" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static 'img/sunsetgrill2.jpg' %}');">
+  <div class="container">
+    <div class="hero-content">
+      <h1>Resort Amenities & Services</h1>
+      <p class="hero-subtitle">
+        Discover our premium offerings designed for your comfort and enjoyment
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Services Navigation -->
+<nav class="services-nav">
+  <div class="container">
+    <ul>
+      {% for category_code, category_name in categories.items %}
+        {% if services_by_category|get_item:category_code %}
+          <li>
+            <a href="#{{ category_code|lower }}">
+              <i class="fas fa-{{ category_code|lower }}"></i> {{ category_name }}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ul>
+  </div>
+</nav>
+
+<!-- Services Content -->
+<main class="services-container">
+  <div class="container">
+    {% for category_code, category_services in services_by_category.items %}
+      {% if category_services %}
+        {% for service in category_services %}
+          <section id="{{ service.slug }}" class="service-section">
+            <div class="service-gallery">
+              <div class="main-image" style="background-image: url('{{ service.main_image.url }}')"></div>
+              <div class="thumbnail-container">
+                <div class="thumbnail" style="background-image: url('{{ service.main_image.url }}')"></div>
+                {% for image in service.images.all %}
+                  <div class="thumbnail" style="background-image: url('{{ image.image.url }}')"></div>
+                {% endfor %}
+              </div>
+              <div class="price-badge">
+                <span class="starting">Starting at</span>
+                <span class="amount">₱{{ service.adult_price }}</span>
+                <span class="per">per person</span>
+              </div>
+            </div>
+            <div class="service-details">
+              <h2>{{ service.name }}</h2>
+              <p class="service-description">{{ service.description }}</p>
+
+              <div class="service-features">
+                <h3>Pricing & Inclusions:</h3>
+                <ul>
+                  <li><strong>₱{{ service.adult_price }} </strong> for Adults</li>
+                  {% if service.child_price %}
+                    <li><strong>₱{{ service.child_price }} </strong> for kids (2-7 years)</li>
+                  {% endif %}
+                  {% if service.senior_pwd_price %}
+                    <li><strong>₱{{ service.senior_pwd_price }} </strong> for Senior Citizens/PWD</li>
+                  {% endif %}
+                </ul>
+              </div>
+
+              <div class="service-cta">
+                <a href="{% url 'blog:contact' %}" class="btn btn-primary">Reserve {{ service.name }}</a>
+                <a href="tel:+6335235598" class="btn btn-secondary">
+                  <i class="fas fa-phone"></i> Call to Inquire
+                </a>
+              </div>
+            </div>
+          </section>
+        {% endfor %}
+      {% endif %}
+    {% endfor %}
+
+    <!-- Call to Action Section -->
+    <section class="services-cta">
+      <div class="cta-content">
+        <h2>Ready to Experience Luxury?</h2>
+        <p>Contact our team to customize your perfect resort experience.</p>
+        <div class="cta-buttons">
+          <a href="{% url 'blog:contact' %}" class="btn btn-primary">Send Inquiry</a>
+          <a href="tel:+6335235598" class="btn btn-secondary">
+            <i class="fas fa-phone"></i> +63 35 2355 98
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+{% endblock %}

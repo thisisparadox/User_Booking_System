@@ -1,0 +1,38 @@
+<header class="site-header">
+  <div class="container">
+    <div class="header-content">
+      <div class="logo-container">
+        <a href="{% url 'blog:index' %}" class="site-logo">
+          <span class="logo-text">Storm's Beach and Country Club</span>
+        </a>
+        <button class="mobile-menu-toggle" aria-label="Toggle navigation">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+
+      <nav class="main-navigation">
+        <ul>
+          <li class="{% if request.path == '/' %}active{% endif %}">
+            <a href="{% url 'blog:index' %}">Home</a>
+          </li>
+          <li class="menu-item-has-children {% if 'services' in request.path %}active{% endif %}">
+            <a href="{% url 'blog:services' %}">Our Services</a>
+              <ul class="sub-menu">
+                <li><a href="{% url 'blog:services' %}#events">Events Center</a></li>
+                <li><a href="{% url 'blog:services' %}#pools">Pools</a></li>
+                <li><a href="{% url 'blog:services' %}#dining">Sky's Sunset Grill</a></li>
+                <li><a href="{% url 'blog:services' %}#guest-house">Guest House</a></li>
+                <li><a href="{% url 'blog:services' %}#conference">Conference Room</a></li>
+                <li><a href="{% url 'blog:services' %}#exclusive">Exclusive Booking</a></li>
+              </ul>
+          </li>
+          <li class="{% if request.path == '/blog/' %}active{% endif %}"><a href="{% url 'blog:post_list' %}">Blog</a></li>
+          <li class="{% if request.path == '/contact/' %}active{% endif %}"><a href="{% url 'blog:contact' %}">Contact</a></li>
+          <li class="{% if 'book' in request.path %}active{% endif %}"><a href="{% url 'blog:book' %}">Book Now</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>

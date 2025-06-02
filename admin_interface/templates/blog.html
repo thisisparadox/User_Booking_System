@@ -1,0 +1,331 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Blog | Storm's
+Beach and Country Club{% endblock %} {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+{% endblock %} {% block content %}
+<!-- Hero Section -->
+<section
+  class="blog-hero"
+  style="
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+      url('{% static 'img/blog2.jpg' %}');
+  "
+>
+  <div class="container">
+    <div class="hero-content">
+      <h1>Storm's Stories</h1>
+      <p class="hero-subtitle">
+        Discover travel tips, resort updates, and local secrets from our
+        tropical paradise
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Content -->
+<main class="blog-container">
+  <div class="container">
+    <!-- Search and Categories -->
+    <section class="blog-tools">
+      <div class="blog-search">
+        <form action="#" method="get">
+          <input
+            type="text"
+            placeholder="Search articles..."
+            aria-label="Search blog articles"
+          />
+          <button type="submit" aria-label="Search">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+
+      <div class="blog-categories">
+        <h3>Categories</h3>
+        <ul>
+          <li><a href="#" class="active">All Posts</a></li>
+          <li><a href="#">Resort Life</a></li>
+          <li><a href="#">Dining</a></li>
+          <li><a href="#">Events</a></li>
+          <li><a href="#">Travel Tips</a></li>
+          <li><a href="#">Local Guide</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Featured Post -->
+    <!-- Featured Post -->
+<section class="featured-post">
+  {% if featured_post %}
+  <article class="featured-card">
+    <div class="featured-image" style="background-image: url('{{ featured_post.featured_image.url }}');">
+      <div class="post-badge">Featured</div>
+    </div>
+    <div class="featured-content">
+      <div class="post-meta">
+        <span class="post-category">{{ featured_post.category.name }}</span>
+        <span class="post-date">
+          <i class="far fa-calendar-alt"></i>
+          {{ featured_post.publish_date|date:"M j, Y" }}
+        </span>
+      </div>
+      <h2>
+        <a href="{{ featured_post.get_absolute_url }}">{{ featured_post.title }}</a>
+      </h2>
+      <p class="post-excerpt">{{ featured_post.excerpt }}</p>
+      <div class="post-footer">
+        <a href="{{ featured_post.get_absolute_url }}" class="read-more">
+          Continue Reading <i class="fas fa-arrow-right"></i>
+        </a>
+        <div class="post-stats">
+          <span><i class="far fa-comment"></i> {{ featured_post.comments.count }} Comments</span>
+          <span><i class="far fa-clock"></i> {{ featured_post.read_time }} min read</span>
+        </div>
+      </div>
+    </div>
+  </article>
+  {% endif %}
+</section>
+
+    <!-- Blog Grid -->
+<section class="blog-grid">
+  <h2 class="section-title">Latest Stories</h2>
+  <div class="grid-container">
+    {% for post in posts %}
+    <article class="post-card">
+      <div class="post-image" style="background-image: url('{{ post.featured_image.url }}');">
+        <div class="date-badge">
+          <span class="day">{{ post.publish_date|date:"d" }}</span>
+          <span class="month">{{ post.publish_date|date:"M" }}</span>
+        </div>
+      </div>
+      <div class="post-content">
+        <div class="post-meta">
+          <span class="post-category">{{ post.category.name }}</span>
+        </div>
+        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+        <p class="post-excerpt">{{ post.excerpt }}</p>
+        <div class="post-footer">
+          <a href="{{ post.get_absolute_url }}" class="read-more">Read More</a>
+          <div class="post-stats">
+            <span><i class="far fa-comment"></i> {{ post.comments.count }}</span>
+          </div>
+        </div>
+      </div>
+    </article>
+    {% endfor %}
+  </div>
+
+  <!-- Pagination -->
+  {% if is_paginated %}
+  <div class="pagination">
+    {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}" class="page-nav">
+        <i class="fas fa-chevron-left"></i> Previous
+      </a>
+    {% else %}
+      <span class="page-nav disabled">
+        <i class="fas fa-chevron-left"></i> Previous
+      </span>
+    {% endif %}
+
+    {% for num in page_obj.paginator.page_range %}
+      {% if page_obj.number == num %}
+        <a href="?page={{ num }}" class="page-number active">{{ num }}</a>
+      {% else %}
+        <a href="?page={{ num }}" class="page-number">{{ num }}</a>
+      {% endif %}
+    {% endfor %}
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}" class="page-nav">
+        Next <i class="fas fa-chevron-right"></i>
+      </a>
+    {% else %}
+      <span class="page-nav disabled">
+        Next <i class="fas fa-chevron-right"></i>
+      </span>
+    {% endif %}
+  </div>
+  {% endif %}
+</section>
+
+    <!-- Customer Feedback Section-->
+    <section class="customer-feedback">
+      <div class="container">
+        <h2 class="section-title">Share Your Experience</h2>
+        <p class="section-subtitle">
+          Help us improve by sharing feedback about your stay
+        </p>
+
+        <form class="feedback-form" id="feedbackForm" method="post">
+          {% csrf_token %}
+          <!-- Guest Information -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="feedback-name">Your Name *</label>
+              <input type="text" id="feedback-name" name="name" required />
+            </div>
+            <div class="form-group">
+              <label for="feedback-email">Email *</label>
+              <input type="email" id="feedback-email" name="email" required />
+            </div>
+          </div>
+
+          <!-- Booking Verification-->
+          <div class="form-group">
+            <label for="booking-id">Booking/Reservation ID (Optional)</label>
+            <input
+              type="text"
+              id="booking-id"
+              name="booking_id"
+              placeholder="E.g., BK-2024-1234"
+            />
+            <small class="hint-text">Adding this helps verify your stay.</small>
+          </div>
+
+          <!-- Stay Date & Rating -->
+          <div class="form-row">
+            <div class="form-group">
+              <label for="feedback-stay">Date of Stay *</label>
+              <input type="date" id="feedback-stay" name="stay_date" required />
+            </div>
+            <div class="form-group">
+              <label>Your Rating *</label>
+              <div class="star-rating">
+                <input
+                  type="radio"
+                  id="star5"
+                  name="rating"
+                  value="5"
+                  required
+                />
+                <label for="star5"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star4" name="rating" value="4" />
+                <label for="star4"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star3" name="rating" value="3" />
+                <label for="star3"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star2" name="rating" value="2" />
+                <label for="star2"><i class="fas fa-star"></i></label>
+                <input type="radio" id="star1" name="rating" value="1" />
+                <label for="star1"><i class="fas fa-star"></i></label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Review Content -->
+          <div class="form-group">
+            <label for="feedback-title">Review Title *</label>
+            <input type="text" id="feedback-title" name="title" required />
+          </div>
+          <div class="form-group">
+            <label for="feedback-message">Your Review *</label>
+            <textarea
+              id="feedback-message"
+              name="message"
+              rows="5"
+              required
+            ></textarea>
+          </div>
+
+          <!-- Submit Button -->
+          <div class="form-submit">
+            <button type="submit" class="btn-submit-feedback">
+              Submit Review
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+</main>
+
+ {% block extra_js %}
+ <script src="{% static 'js/blog.js' %}"></script>
+ <!-- Javascripts -->
+<script src="{% static 'js/jquery-2.1.4.min.js' %}"></script>
+
+<!-- Dropdown Menu -->
+<script src="{% static 'js/hoverIntent.js' %}"></script>
+<script src="{% static 'js/superfish.js' %}"></script>
+
+<!-- Bootstrap -->
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+<!-- Waypoints -->
+<script src="{% static 'js/jquery.waypoints.min.js' %}"></script>
+
+<!-- Counters -->
+<script src="{% static 'js/jquery.countTo.js' %}"></script>
+
+<!-- Stellar Parallax -->
+<script src="{% static 'js/jquery.stellar.min.js' %}"></script>
+
+<!-- Owl Slider -->
+{# <script src="{% static 'js/owl.carousel.min.js' %}"></script> #}
+
+<!-- Date Picker -->
+<script src="{% static 'js/bootstrap-datepicker.min.js' %}"></script>
+
+<!-- CS Select -->
+<script src="{% static 'js/classie.js' %}"></script>
+<script src="{% static 'js/selectFx.js' %}"></script>
+
+<!-- Flexslider -->
+<script src="{% static 'js/jquery.flexslider-min.js' %}"></script>
+
+<script src="{% static 'js/custom.js' %}"></script>
+ <script>
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function () {
+            this.classList.toggle('active');
+            document.querySelector('.main-navigation').classList.toggle('active');
+        });
+
+        // Back to top button
+        window.addEventListener('scroll', function () {
+            var backToTop = document.getElementById('back-to-top');
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+
+                // Close mobile menu after clicking a link (optional UX enhancement)
+                const menuToggle = document.querySelector('.mobile-menu-toggle');
+                const nav = document.querySelector('.main-navigation');
+                if (menuToggle.classList.contains('active')) {
+                    menuToggle.classList.remove('active');
+                    nav.classList.remove('active');
+                }
+            });
+        });
+
+        // Optional: Smooth scroll for "Back to Top" button
+        document.getElementById('back-to-top').addEventListener('click', function (e) {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+ {% endblock %}
+
+{% endblock %}

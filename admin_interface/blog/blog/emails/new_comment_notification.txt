@@ -1,0 +1,10 @@
+A new comment has been submitted and requires approval.
+
+Post: {{ comment.post.title }}
+Author: {{ comment.user.username }}
+Date: {{ comment.created_date }}
+Content:
+{{ comment.content }}
+
+Approve or reject this comment at:
+{{ admin_url }}

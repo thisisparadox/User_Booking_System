@@ -1,0 +1,86 @@
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-about">
+          <h3>About Storm's</h3>
+          <p>
+            Storm's Beach and Country Club offers luxury accommodations and
+            world-class amenities in the beautiful setting of Santa Catalina,
+            Negros Oriental.
+          </p>
+          <div class="footer-social">
+            <a href="#" aria-label="Facebook"
+              ><i class="fab fa-facebook-f"></i
+            ></a>
+            <a href="#" aria-label="Instagram"
+              ><i class="fab fa-instagram"></i
+            ></a>
+            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="#" aria-label="TripAdvisor"
+              ><i class="fab fa-tripadvisor"></i
+            ></a>
+          </div>
+        </div>
+
+        <div class="footer-col footer-links">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="{% url 'blog:index' %}">Home</a></li>
+            <li><a href="{% url 'blog:services' %}">Services</a></li>
+            <li><a href="{% url 'blog:post_list' %}">Blog</a></li>
+            <li><a href="{% url 'blog:contact' %}">Contact</a></li>
+            <li><a href="#">Gallery</a></li>
+            <li><a href="#">Special Offers</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-services">
+          <h3>Our Services</h3>
+          <ul>
+            <li><a href="#">Accommodations</a></li>
+            <li><a href="#">Dining</a></li>
+            <li><a href="#">Spa Services</a></li>
+            <li><a href="#">Water Sports</a></li>
+            <li><a href="#">Event Planning</a></li>
+            <li><a href="#">Tour Packages</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col footer-newsletter">
+          <h3>Newsletter</h3>
+          <p>Subscribe to receive updates on special offers and events.</p>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Your email address" required />
+            <button type="submit" class="btn-newsletter">Subscribe</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="footer-bottom-content">
+        <div class="copyright">
+          <p>
+            &copy; <span id="current-year"></span> Storm's Beach and Country
+            Club. All Rights Reserved.
+          </p>
+        </div>
+
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Set current year in footer
+  document.getElementById("current-year").textContent =
+    new Date().getFullYear();
+</script>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Storm's Beach and Country Club{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+
+    <!-- Base CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <!-- Page Specific CSS -->
+    {% block extra_css %}{% endblock %}
+  </head>
+  <body>
+    <div class="site-wrapper">
+      {% include 'includes/header.html' %}
+      <main>
+        {% block content %}{% endblock %}
+      </main>
+      {% include 'includes/footer.html' %}
+    </div>
+
+    <!-- Back to Top Button -->
+    <a href="#" id="back-to-top" class="back-to-top" aria-label="Back to top">
+      <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <!-- JavaScript -->
+    <script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    <script src="{% static 'js/scripts.min.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <!-- Page Specific JS -->
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

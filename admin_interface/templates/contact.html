@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Us | Storm's Beach and Country Club{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/contact.css' %}">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock %}
+{% block content %}
+<!-- Hero Section -->
+<section class="hero hero-contact"
+    style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{% static 'img/storms-arial-view.jpg' %}');">
+    <div class="container">
+        <div class="hero-content">
+            <h1>Contact Us</h1>
+            <p class="hero-subtitle">We're here to help you plan your perfect getaway. Reach out with any
+                questions or special requests.</p>
+            <a href="#contact-form" class="btn btn-primary btn-lg scroll-to">Send a Message</a>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Get In Touch</h2>
+            <p class="section-subtitle">Our team is ready to assist you with reservations, events, and any
+                inquiries about our facilities.</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-map">
+                <div id="map" class="map-container"></div>
+                <div class="map-overlay">
+                    <div class="overlay-content">
+                        <h3>Visit Us</h3>
+                        <p>Litid, Nagbalaye, Santa Catalina, Negros Oriental, Philippines</p>
+                        <a href="https://maps.google.com" target="_blank" class="btn btn-outline">Get Directions</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="contact-info">
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Location</h3>
+                        <p>Litid, Nagbalaye, Santa Catalina, Negros Oriental, Philippines</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-phone-alt"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Phone</h3>
+                        <p>+63 35 2355 98</p>
+                        <p>+63 915 123 4567 (Mobile)</p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Email</h3>
+                        <p><a href="mailto:info@stormsbeachclub.com">info@stormsbeachclub.com</a></p>
+                        <p><a href="mailto:reservations@stormsbeachclub.com">reservations@stormsbeachclub.com</a></p>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Hours</h3>
+                        <p>Daily: 8:00 AM - 10:00 PM</p>
+                        <p>Office Hours: 9:00 AM - 6:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Form Section -->
+<section id="contact-form" class="form-section">
+    <div class="container">
+        <div class="form-container">
+            <div class="form-header">
+                <h2>Send Us a Message</h2>
+                <p>Have questions or special requests? Fill out the form below and we'll respond within 24 hours.</p>
+            </div>
+
+            <form class="contact-form" method="post">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group half">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group half">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone">
+                    </div>
+                    <div class="form-group half">
+                        <label for="subject">Subject</label>
+                        <select id="subject" name="subject">
+                            <option value="">Select a subject</option>
+                            <option value="reservation">Reservation Inquiry</option>
+                            <option value="event">Event Booking</option>
+                            <option value="general">General Question</option>
+                            <option value="feedback">Feedback/Suggestion</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Your Message *</label>
+                    <textarea id="message" name="message" rows="6" required></textarea>
+                </div>
+
+                <div class="form-submit">
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq-section">
+    <div class="container">
+        <div class="section-header">
+            <h2>Frequently Asked Questions</h2>
+        </div>
+
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question">What are your check-in and check-out times?<span class="faq-toggle"></span></button>
+                <div class="faq-answer">
+                    <p>Standard check-in time is at 2:00 PM and check-out is at 12:00 PM. Early check-in and late check-out may be available upon request and subject to availability.</p>
+                </div>
+            </div>
+
+            <!-- Other FAQ items would follow the same pattern -->
+            <!-- ... -->
+        </div>
+
+        <div class="cta-box">
+            <h3>Still have questions?</h3>
+            <p>Our customer service team is available daily from 8:00 AM to 8:00 PM to assist you.</p>
+            <a href="tel:+6335235598" class="btn btn-secondary">
+                <i class="fas fa-phone-alt"></i> Call Us Now
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<!-- JavaScript -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap" async defer></script>
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script src="js/scripts.min.js"></script>
+
+    <script>
+        // Initialize Google Map
+        function initMap() {
+            const location = { lat: 9.3333, lng: 122.8633 }; // Coordinates for Santa Catalina
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 15,
+                center: location,
+                styles: [
+                    {
+                        "featureType": "poi",
+                        "stylers": [
+                            { "visibility": "off" }
+                        ]
+                    }
+                ]
+            });
+            const marker = new google.maps.Marker({
+                position: location,
+                map: map,
+                title: "Storm's Beach and Country Club"
+            });
+        }
+
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+    </script>
+{% endblock %}

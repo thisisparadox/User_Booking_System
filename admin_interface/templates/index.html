@@ -1,0 +1,574 @@
+{% extends 'base.html' %} {% load static %} {% block title %}Storm's Beach and
+Country Club{% endblock %} {% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/homedesign.css' %}" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+{% endblock %} {% block content %}
+<!-- Hero Slider -->
+<section class="hero-slider">
+  <div class="slider-container">
+    <!-- Slide 1 -->
+    <div
+      class="slide active"
+      style="background-image: url('{% static "img/bestplace.jpg" %}')"
+    >
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <span class="slide-category">Family Guest House</span>
+        <h2 class="slide-title">Your Home Away From Home</h2>
+        <p class="slide-text">
+          Spacious accommodations perfect for family vacations and gatherings
+        </p>
+        <a href="services.html#guest-house" class="btn btn-primary"
+          >Book Your Stay</a
+        >
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide" style="background-image: url('{% static "img/sunsetgrill.jpg" %}')">
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <span class="slide-category">Sky's Sunset Grill</span>
+        <h2 class="slide-title">Catch the Sunset, Stay for the Flavor</h2>
+        <p class="slide-text">
+          Oceanfront dining with the best views in Negros Oriental
+        </p>
+        <a href="services.html#dining" class="btn btn-primary">View Menu</a>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide" style="background-image: url('{% static "img/sunset.jpg" %}')">
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <span class="slide-category">Exclusive Booking</span>
+        <h2 class="slide-title">A Perfect Place For Your Special Event</h2>
+        <p class="slide-text">
+          Private resort bookings for weddings, reunions, and corporate retreats
+        </p>
+        <a href="services.html#exclusive" class="btn btn-primary"
+          >Inquire Now</a
+        >
+      </div>
+    </div>
+  </div>
+
+  <div class="slider-controls">
+    <button class="prev-slide" aria-label="Previous slide">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+    <div class="slide-dots"></div>
+    <button class="next-slide" aria-label="Next slide">
+      <i class="fas fa-chevron-right"></i>
+    </button>
+  </div>
+</section>
+
+<!-- Booking Widget -->
+<section class="booking-widget">
+  <div class="container">
+    <form class="booking-form">
+      <div class="form-group">
+        <label for="service-type">Select Service</label>
+        <select id="service-type" class="form-control">
+          <option value="" disabled selected>Choose a service</option>
+          <option value="events">Events Center</option>
+          <option value="dining">Sky's Sunset Grill</option>
+          <option value="guest-house">Family Guest House</option>
+          <option value="conference">Conference Room</option>
+          <option value="exclusive">Exclusive Booking</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="check-in">Check In</label>
+        <input type="date" id="check-in" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <label for="check-out">Check Out</label>
+        <input type="date" id="check-out" class="form-control" />
+      </div>
+
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary">
+          Check Availability
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-number" data-count="20356">0</div>
+        <div class="stat-label">Happy Guests</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-number" data-count="15501">0</div>
+        <div class="stat-label">Successful Events</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-number" data-count="8200">0</div>
+        <div class="stat-label">5-Star Reviews</div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-number" data-count="8763">0</div>
+        <div class="stat-label">Repeat Visitors</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Services -->
+<section class="featured-services">
+  <div class="container">
+    <div class="section-header">
+      <h2>Our Services</h2>
+      <p>
+        Discover the exceptional amenities that make Storm's Beach truly special
+      </p>
+    </div>
+
+    <div class="services-grid">
+      <!-- Service 1 -->
+      <article class="service-card">
+        <div
+          class="service-image"
+          style="background-image: url('img/adultpool.jpg')"
+        >
+          <div class="price-badge">
+            <span class="from">From</span>
+            <span class="amount">₱5,000</span>
+          </div>
+        </div>
+        <div class="service-content">
+          <h3>Events Center</h3>
+          <p>
+            Host unforgettable moments in our elegant, multi-purpose venue
+            designed for weddings, conferences, and special celebrations.
+          </p>
+          <a href="services.html#events" class="btn btn-outline">Learn More</a>
+        </div>
+      </article>
+
+      <!-- Service 2 -->
+      <article class="service-card">
+        <div
+          class="service-image"
+          style="background-image: url('img/nightlife.jpg')"
+        >
+          <div class="price-badge">
+            <span class="from">From</span>
+            <span class="amount">₱40,000</span>
+          </div>
+        </div>
+        <div class="service-content">
+          <h3>Exclusive Booking</h3>
+          <p>
+            Enjoy complete privacy with our resort takeover package, perfect for
+            weddings, corporate retreats, or large gatherings.
+          </p>
+          <a href="services.html#exclusive" class="btn btn-outline"
+            >Inquire Now</a
+          >
+        </div>
+      </article>
+
+      <!-- Service 3 -->
+      <article class="service-card">
+        <div
+          class="service-image"
+          style="background-image: url('img/billiard.jpg')"
+        >
+          <div class="price-badge">
+            <span class="from">From</span>
+            <span class="amount">₱12,000</span>
+          </div>
+        </div>
+        <div class="service-content">
+          <h3>Family Guest House</h3>
+          <p>
+            Spacious, child-friendly accommodations designed for comfort and
+            convenience during your family vacation.
+          </p>
+          <a href="services.html#guest-house" class="btn btn-outline"
+            >View Details</a
+          >
+        </div>
+      </article>
+
+      <!-- Service 4 -->
+      <article class="service-card">
+        <div
+          class="service-image"
+          style="background-image: url('img/conference-room.jpg')"
+        >
+          <div class="price-badge">
+            <span class="from">From</span>
+            <span class="amount">₱40,000</span>
+          </div>
+        </div>
+        <div class="service-content">
+          <h3>Conference Room</h3>
+          <p>
+            Professional meeting space with state-of-the-art technology for
+            productive business gatherings.
+          </p>
+          <a href="services.html#conference" class="btn btn-outline"
+            >Book Now</a
+          >
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Facilities Section -->
+<section class="facilities-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Resort Facilities</h2>
+      <p>
+        Explore our world-class amenities designed for your comfort and
+        enjoyment
+      </p>
+    </div>
+
+    <div class="facilities-tabs">
+      <nav class="tab-nav">
+        <button class="tab-btn active" data-tab="bar">
+          <i class="fas fa-cocktail"></i>
+          <span>Bars</span>
+        </button>
+        <button class="tab-btn" data-tab="parking">
+          <i class="fas fa-parking"></i>
+          <span>Car Park</span>
+        </button>
+        <button class="tab-btn" data-tab="pool">
+          <i class="fas fa-swimming-pool"></i>
+          <span>Swimming Pool</span>
+        </button>
+      </nav>
+
+      <div class="tab-content active" id="bar">
+        <div class="tab-grid">
+          <div class="tab-image">
+            <img src="img/sunsetgrill.jpg" alt="Resort Bar" />
+          </div>
+          <div class="tab-details">
+            <h3>Beachfront Bars</h3>
+            <p>
+              Unwind at our vibrant beachfront bars serving tropical cocktails,
+              ice-cold beers, and premium spirits with stunning sunset views.
+              Enjoy live acoustic music on select evenings and friendly
+              bartenders ready to craft your perfect drink.
+            </p>
+            <div class="service-hours">
+              <strong>Service Hours:</strong>
+              <span>7:30 AM - 8:00 PM Daily</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="parking">
+        <div class="tab-grid">
+          <div class="tab-image">
+            <img src="img/car_park.jpg" alt="Resort Parking" />
+          </div>
+          <div class="tab-details">
+            <h3>Secure Parking</h3>
+            <p>
+              Our spacious, well-lit car park is monitored by security personnel
+              24/7. Conveniently located within the resort with designated
+              spaces for PWD and senior guests. Complimentary for all resort
+              guests and event attendees.
+            </p>
+            <div class="service-hours">
+              <strong>Service Hours:</strong>
+              <span>24/7 Access</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-content" id="pool">
+        <div class="tab-grid">
+          <div class="tab-image">
+            <img src="img/adultpool.jpg" alt="Resort Pool" />
+          </div>
+          <div class="tab-details">
+            <h3>Swimming Pools</h3>
+            <p>
+              Dive into relaxation at our well-maintained swimming pools with
+              areas for all ages. Featuring comfortable loungers, poolside
+              service, and lifeguard supervision during operating hours. The
+              perfect spot to cool off and enjoy the tropical sun.
+            </p>
+            <div class="service-hours">
+              <strong>Service Hours:</strong>
+              <span>7:30 AM - 8:00 PM Daily</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Blog Section -->
+<section class="blog-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>From Our Blog</h2>
+      <p>Discover stories, tips, and resort updates</p>
+      <a href="blog.html" class="view-all">View All Articles</a>
+    </div>
+
+    <div class="blog-grid">
+      <!-- Article 1 -->
+      <article class="blog-card">
+        <div
+          class="blog-image"
+          style="background-image: url('img/stormsunset.jpg')"
+        >
+          <div class="post-date">
+            <span class="day">22</span>
+            <span class="month">Apr</span>
+          </div>
+        </div>
+        <div class="blog-content">
+          <span class="post-category">Dining</span>
+          <h3><a href="#">Catch the Sunset: Dining at Sky's Grill</a></h3>
+          <p>
+            Discover why Sky's Sunset Grill is the perfect blend of flavor and
+            view with our must-try menu.
+          </p>
+          <a href="#" class="read-more"
+            >Read More <i class="fas fa-arrow-right"></i
+          ></a>
+        </div>
+      </article>
+
+      <!-- Article 2 -->
+      <article class="blog-card">
+        <div
+          class="blog-image"
+          style="background-image: url('img/bestplace.jpg')"
+        >
+          <div class="post-date">
+            <span class="day">12</span>
+            <span class="month">Mar</span>
+          </div>
+        </div>
+        <div class="blog-content">
+          <span class="post-category">Family</span>
+          <h3>
+            <a href="#">A Home Away from Home: Family Guest House Tips</a>
+          </h3>
+          <p>
+            How our guest house makes traveling with kids easy, fun, and
+            memorable.
+          </p>
+          <a href="#" class="read-more"
+            >Read More <i class="fas fa-arrow-right"></i
+          ></a>
+        </div>
+      </article>
+
+      <!-- Article 3 -->
+      <article class="blog-card">
+        <div
+          class="blog-image"
+          style="background-image: url('img/conference-room.jpg')"
+        >
+          <div class="post-date">
+            <span class="day">03</span>
+            <span class="month">Feb</span>
+          </div>
+        </div>
+        <div class="blog-content">
+          <span class="post-category">Business</span>
+          <h3><a href="#">Host Like a Pro: Conference Room Essentials</a></h3>
+          <p>
+            How our conference room helps you impress clients and run successful
+            meetings.
+          </p>
+          <a href="#" class="read-more"
+            >Read More <i class="fas fa-arrow-right"></i
+          ></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+{% endblock %} {% block extra_js %}
+<!-- JavaScript -->
+<script src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+<script src="{% static 'js/scripts.min.js' %}"></script>
+
+<script>
+  // Set current year in footer
+  document.getElementById("current-year").textContent =
+    new Date().getFullYear();
+
+  // Mobile menu toggle
+  document
+    .querySelector(".mobile-menu-toggle")
+    .addEventListener("click", function () {
+      this.classList.toggle("active");
+      document.querySelector(".main-navigation").classList.toggle("active");
+    });
+
+  // Back to top button
+  window.addEventListener("scroll", function () {
+    var backToTop = document.getElementById("back-to-top");
+    if (window.pageYOffset > 300) {
+      backToTop.classList.add("active");
+    } else {
+      backToTop.classList.remove("active");
+    }
+  });
+
+  // Smooth scrolling for anchor links
+  document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", function (e) {
+      e.preventDefault();
+
+      document.querySelector(this.getAttribute("href")).scrollIntoView({
+        behavior: "smooth",
+      });
+    });
+  });
+
+  // Slider functionality
+  const slider = {
+    container: document.querySelector(".slider-container"),
+    slides: document.querySelectorAll(".slide"),
+    prevBtn: document.querySelector(".prev-slide"),
+    nextBtn: document.querySelector(".next-slide"),
+    dotsContainer: document.querySelector(".slide-dots"),
+    currentIndex: 0,
+
+    init: function () {
+      // Create dots
+      this.slides.forEach((slide, index) => {
+        const dot = document.createElement("button");
+        dot.classList.add("dot");
+        if (index === 0) dot.classList.add("active");
+        dot.addEventListener("click", () => this.goToSlide(index));
+        this.dotsContainer.appendChild(dot);
+      });
+
+      // Set up event listeners
+      this.prevBtn.addEventListener("click", () => this.prevSlide());
+      this.nextBtn.addEventListener("click", () => this.nextSlide());
+
+      // Auto-rotate slides
+      setInterval(() => this.nextSlide(), 5000);
+    },
+
+    goToSlide: function (index) {
+      this.slides[this.currentIndex].classList.remove("active");
+      this.slides[index].classList.add("active");
+
+      document
+        .querySelectorAll(".dot")
+        [this.currentIndex].classList.remove("active");
+      document.querySelectorAll(".dot")[index].classList.add("active");
+
+      this.currentIndex = index;
+    },
+
+    nextSlide: function () {
+      const nextIndex = (this.currentIndex + 1) % this.slides.length;
+      this.goToSlide(nextIndex);
+    },
+
+    prevSlide: function () {
+      const prevIndex =
+        (this.currentIndex - 1 + this.slides.length) % this.slides.length;
+      this.goToSlide(prevIndex);
+    },
+  };
+
+  // Initialize slider
+  slider.init();
+
+  // Tab functionality
+  const tabs = {
+    init: function () {
+      const tabBtns = document.querySelectorAll(".tab-btn");
+
+      tabBtns.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const tabId = btn.getAttribute("data-tab");
+          this.switchTab(tabId);
+        });
+      });
+    },
+
+    switchTab: function (tabId) {
+      // Hide all tabs
+      document.querySelectorAll(".tab-content").forEach((tab) => {
+        tab.classList.remove("active");
+      });
+
+      // Deactivate all buttons
+      document.querySelectorAll(".tab-btn").forEach((btn) => {
+        btn.classList.remove("active");
+      });
+
+      // Activate selected tab
+      document.getElementById(tabId).classList.add("active");
+
+      // Activate clicked button
+      document
+        .querySelector(`.tab-btn[data-tab="${tabId}"]`)
+        .classList.add("active");
+    },
+  };
+
+  // Initialize tabs
+  tabs.init();
+
+  // Counter animation
+  function animateCounters() {
+    const counters = document.querySelectorAll(".stat-number");
+    const speed = 200;
+
+    counters.forEach((counter) => {
+      const target = +counter.getAttribute("data-count");
+      const count = +counter.innerText;
+      const increment = target / speed;
+
+      if (count < target) {
+        counter.innerText = Math.ceil(count + increment);
+        setTimeout(animateCounters, 1);
+      } else {
+        counter.innerText = target;
+      }
+    });
+  }
+
+  // Start counter animation when stats section is in view
+  const observer = new IntersectionObserver(
+    (entries) => {
+      if (entries[0].isIntersecting) {
+        animateCounters();
+        observer.unobserve(entries[0].target);
+      }
+    },
+    { threshold: 0.5 }
+  );
+
+  observer.observe(document.querySelector(".stats-section"));
+</script>
+{% endblock %}

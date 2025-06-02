@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ post.title }} | Storm's Beach and Country Club{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog.css' %}" />
+<link rel="stylesheet" href="{% static 'css/style.css' %}" />
+{% endblock %}
+
+{% block content %}
+<!-- Post Header -->
+<section class="post-header" style="background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('{{ post.featured_image.url }}');">
+    <div class="container">
+        <div class="post-header-content">
+            <div class="post-meta">
+                <span class="post-category">{{ post.category.name }}</span>
+                <span class="post-date">
+                    <i class="far fa-calendar-alt"></i>
+                    {{ post.publish_date|date:"F j, Y" }}
+                </span>
+                <span class="post-author">
+                    <i class="far fa-user"></i>
+                    {{ post.author.get_full_name|default:post.author.username }}
+                </span>
+            </div>
+            <h1>{{ post.title }}</h1>
+            {% if post.excerpt %}
+            <p class="post-excerpt">{{ post.excerpt }}</p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Post Content -->
+<article class="post-content">
+    <div class="container">
+        <div class="post-body">
+            {{ post.content|safe }}
+        </div>
+
+        <!-- Post Footer -->
+        <div class="post-footer">
+            <div class="post-tags">
+                {% for tag in post.tags.all %}
+                <a href="#" class="tag">{{ tag.name }}</a>
+                {% endfor %}
+            </div>
+            <div class="post-share">
+                <span>Share:</span>
+                <a href="#" class="share-link facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="share-link twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="share-link linkedin"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+        </div>
+
+        <!-- Author Bio -->
+        <div class="author-bio">
+            <div class="author-avatar">
+                {% if post.author.profile.avatar %}
+                <img src="{{ post.author.profile.avatar.url }}" alt="{{ post.author.get_full_name }}" />
+                {% else %}
+                <i class="fas fa-user-circle"></i>
+                {% endif %}
+            </div>
+            <div class="author-info">
+                <h3>{{ post.author.get_full_name|default:post.author.username }}</h3>
+                {% if post.author.profile.bio %}
+                <p>{{ post.author.profile.bio }}</p>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Reviews Section -->
+        <section class="reviews-section">
+            <h2>Reviews</h2>
+            {% if user.is_authenticated %}
+            <div class="review-form-container">
+                <h3>Write a Review</h3>
+                <form method="post" action="{% url 'blog:add_review' post.id %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ review_form.as_p }}
+                    {{ image_form.as_p }}
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                </form>
+            </div>
+            {% endif %}
+
+            <div class="reviews-list">
+                {% for review in approved_reviews %}
+                <div class="review-card">
+                    <div class="review-header">
+                        <div class="reviewer-info">
+                            <h4>{{ review.user.get_full_name|default:review.user.username }}</h4>
+                            <div class="review-meta">
+                                <span class="review-date">{{ review.created_at|date:"F j, Y" }}</span>
+                                <span class="review-rating">
+                                    {% for i in "12345" %}
+                                    <i class="fas fa-star{% if forloop.counter <= review.rating %} active{% endif %}"></i>
+                                    {% endfor %}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        <p>{{ review.content }}</p>
+                    </div>
+                    {% if review.images.all %}
+                    <div class="review-images">
+                        {% for image in review.images.all %}
+                        <a href="{{ image.image.url }}" class="review-image" target="_blank">
+                            <img src="{{ image.image.url }}" alt="Review image {{ forloop.counter }}" />
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                {% empty %}
+                <p class="no-reviews">No reviews yet. Be the first to review!</p>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Comments Section -->
+        <section class="comments-section">
+            <h2>Comments</h2>
+            {% if user.is_authenticated %}
+            <div class="comment-form-container">
+                <h3>Leave a Comment</h3>
+                <form method="post" action="{% url 'blog:add_comment' post.id %}">
+                    {% csrf_token %}
+                    {{ comment_form.as_p }}
+                    <button type="submit" class="btn btn-primary">Post Comment</button>
+                </form>
+            </div>
+            {% endif %}
+
+            <div class="comments-list">
+                {% for comment in approved_comments %}
+                <div class="comment-card">
+                    <div class="comment-header">
+                        <div class="commenter-info">
+                            <h4>{{ comment.user.get_full_name|default:comment.user.username }}</h4>
+                            <span class="comment-date">{{ comment.created_at|date:"F j, Y" }}</span>
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        <p>{{ comment.content }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <p class="no-comments">No comments yet. Be the first to comment!</p>
+                {% endfor %}
+            </div>
+        </section>
+    </div>
+</article>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Initialize image upload preview
+    document.addEventListener('DOMContentLoaded', function() {
+        const imageInput = document.querySelector('input[type="file"]');
+        if (imageInput) {
+            imageInput.addEventListener('change', function() {
+                // Add your image preview logic here
+            });
+        }
+    });
+</script>
+{% endblock %} 
